@@ -1,8 +1,9 @@
+import logging
+from argparse import ArgumentParser
+from Bio import SeqIO, SeqFeature
 import os
 import glob
-import pathlib
-from Bio import SeqIO, SeqFeature
-from argparse import ArgumentParser
+import sys
 
 def parse_args():
     parser = ArgumentParser(description = "Transforms GenBank files into tab-separated value files")
