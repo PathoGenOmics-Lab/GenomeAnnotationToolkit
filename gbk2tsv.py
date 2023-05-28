@@ -9,7 +9,7 @@ from datetime import datetime
 
 __author__ = 'Paula Ruiz-Rodriguez'
 __credits__ = ['Paula Ruiz-Rodriguez', 'PathoGenOmics', 'Yu Wan']
-__license__ = ['GPL 3', 'Modifiyed from Copyright 2019 Yu Wan (wanyuac@sina.cn)']
+__license__ = ['GPL 3', 'Modified from Copyright 2019 Yu Wan (wanyuac@sina.cn)']
 __version__ = '0.1.0'
 __maintainer__ = 'Paula Ruiz-Rodriguez: @paururo'
 __email__ = 'paula.ruiz-rodriguez@uv.es'
