@@ -1,5 +1,5 @@
 import logging
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawTextHelpFormatter
 from Bio import SeqIO, SeqFeature
 import os
 import glob
@@ -19,14 +19,15 @@ def setup_logging():
 
 def parse_args():
     parser = ArgumentParser(
-        description="""
+        formatter_class=RawTextHelpFormatter,
+        description='''
         Transforms GenBank files into tab-separated value files.
 
-        Example command:
-            python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRNA,rRNA --nucleotides --protein
-            python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features "CDS,rRNA,tRNA"
-            python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleotides
-        """
+        Example commands:
+            1. python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRNA,rRNA --nucleotides --protein
+            2. python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features "CDS,rRNA,tRNA"
+            3. python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleotides
+        '''
     )
     parser.add_argument("-g", "--gbk", nargs = "+", type = str, required = True, dest = "gbks", default = "", help = "Specify GenBank files as input")
     parser.add_argument("-o", "--outdir", type = str, required = False, dest = "outdir", default = ".", help = "Define the directory for output files")
@@ -87,7 +88,7 @@ def main():
     
     if (len(gbk_list) == 0):
         logger.error('Invalid --gbk argument: no GenBank file is found.')
-        sys.exit("Invalid --gbk argument: no GenBank file is found.")
+        sys.exit('Invalid --gbk argument: no GenBank file is found.')
         
     features = args.features.split(",")
     header = prepare_header(args)
