@@ -19,10 +19,21 @@ def get_input_filenames(gbks):
         gbk_list = glob.glob(str(pathlib.Path(".", gbk_list[0])))  # Get names of all GenBank files under the current working directory
     return gbk_list
 
+def prepare_header(args):
+    header = ["Contig", "Locus", "Feature", "Start", "End", "Strand", "Pseudo", "Product", "Note"]
+    if args.nucl_seq:
+        header.append("Nucl_seq")
+    if args.prot_seq:
+        header.append("Prot_seq")
+    return header
+
+
+
 def main():
     args = parse_args()
     gbk_list = get_input_filenames(args.gbks)
     features = args.features.split(",")
+    header = prepare_header(args)
     
 if __name__ == "__main__":
     main()
