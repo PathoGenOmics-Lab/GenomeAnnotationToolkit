@@ -4,6 +4,7 @@ from Bio import SeqIO, SeqFeature
 import os
 import glob
 import sys
+import pathlib
 
 def parse_args():
     parser = ArgumentParser(description = "Transforms GenBank files into tab-separated value files")
