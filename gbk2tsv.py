@@ -20,6 +20,8 @@ def get_input_filenames(gbks):
     return gbk_list
 
 def main():
-    args = parse_args()  
+    args = parse_args()
+    gbk_list = get_input_filenames(args.gbks)
+    
 if __name__ == "__main__":
     main()
