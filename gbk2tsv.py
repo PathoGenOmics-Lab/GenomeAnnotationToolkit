@@ -5,6 +5,17 @@ import os
 import glob
 import sys
 import pathlib
+from datetime import datetime
+
+def setup_logging():
+    current_date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')  # Get current date and time
+    logger = logging.getLogger(__name__) # Create a custom logger
+    logger.setLevel(logging.INFO) # Set the level of this logger
+    handler = logging.FileHandler(f'gbk2tsv_{current_date}.log')     # Create a file handler
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') # Create a logging format
+    handler.setFormatter(formatter)    # Add the formatter to the handler
+    logger.addHandler(handler)   # Add the handler to the logger  
+    return logger
 
 def parse_args():
     parser = ArgumentParser(description = "Transforms GenBank files into tab-separated value files")
@@ -55,7 +66,7 @@ def process_feature(feature, contig, args):
 
 def main():
     # Set up logging
-    logging.basicConfig(filename='gbk2tsv.log', level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
+    logger = setup_logging()
     logging.info('Starting the conversion process')
     
     args = parse_args()
