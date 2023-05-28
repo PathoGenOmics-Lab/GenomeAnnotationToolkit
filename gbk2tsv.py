@@ -18,7 +18,16 @@ def setup_logging():
     return logger
 
 def parse_args():
-    parser = ArgumentParser(description = "Transforms GenBank files into tab-separated value files")
+    parser = ArgumentParser(
+        description="""
+        Transforms GenBank files into tab-separated value files.
+
+        Example command:
+            python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRNA,rRNA --nucleotides --protein
+            python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features "CDS,rRNA,tRNA"
+            python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleotides
+        """
+    )
     parser.add_argument("-g", "--gbk", nargs = "+", type = str, required = True, dest = "gbks", default = "", help = "Specify GenBank files as input")
     parser.add_argument("-o", "--outdir", type = str, required = False, dest = "outdir", default = ".", help = "Define the directory for output files")
     parser.add_argument("-f", "--features", type = str, required = False, dest = "features", default = "CDS,tRNA,rRNA", help = "Features to include, separated by commas")
