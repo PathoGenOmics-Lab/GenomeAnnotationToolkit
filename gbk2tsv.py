@@ -27,7 +27,14 @@ def prepare_header(args):
         header.append("Prot_seq")
     return header
 
-
+def process_records(records, features, args):
+    lines = []
+    for record in records:
+        contig = record.name
+        for feature in filter(lambda f: f.type in features, record.features):
+            line = process_feature(feature, contig, args)
+            lines.append(line)
+    return lines
 
 def main():
     args = parse_args()
