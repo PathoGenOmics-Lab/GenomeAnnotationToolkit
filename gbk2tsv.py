@@ -8,13 +8,13 @@ import pathlib
 from datetime import datetime
 
 __author__ = 'Paula Ruiz-Rodriguez'
-__credits__ = ['Paula Ruiz-Rodriguez', 'PathoGenOmics']
-__license__ = 'GPL 3'
+__credits__ = ['Paula Ruiz-Rodriguez', 'PathoGenOmics', 'Yu Wan']
+__license__ = ['GPL 3', 'Modifiyed from Copyright 2019 Yu Wan (wanyuac@sina.cn)']
 __version__ = '0.1.0'
 __maintainer__ = 'Paula Ruiz-Rodriguez: @paururo'
 __email__ = 'paula.ruiz-rodriguez@uv.es'
-__status__ = 'developing'
-__lab__ = 'PathoGenOmics, I2SysBio'
+__status__ = 'finished'
+__lab__ = 'PathoGenOmics (I2SysBio)'
 
 def setup_logging():
     current_date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')  # Get current date and time
@@ -36,6 +36,7 @@ def parse_args():
             1. python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRNA,rRNA --nucleotides --protein
             2. python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features CDS,rRNA,tRNA
             3. python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleotides
+        
         Requires Biopython
         '''
     )
