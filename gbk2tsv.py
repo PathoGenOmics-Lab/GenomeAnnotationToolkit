@@ -55,6 +55,16 @@ def main():
     gbk_list = get_input_filenames(args.gbks)
     features = args.features.split(",")
     header = prepare_header(args)
-    
+    pathlib.Path(args.outdir).mkdir(parents=True, exist_ok=True)
+    for gbk in gbk_list:
+        tsv_name = pathlib.Path(args.outdir, pathlib.Path(gbk).stem + ".tsv")
+        records = list(SeqIO.parse(gbk, "genbank"))
+        lines = process_records(records, features, args)
+        
+        with open(tsv_name, "w") as tsv:
+            tsv.write("\t".join(header) + "\n")
+            for line in lines:
+                tsv.write("\t".join(line) + "\n")    
+                
 if __name__ == "__main__":
     main()
