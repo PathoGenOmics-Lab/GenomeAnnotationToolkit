@@ -7,14 +7,23 @@ import sys
 import pathlib
 from datetime import datetime
 
+__author__ = 'Paula Ruiz-Rodriguez'
+__credits__ = ['Paula Ruiz-Rodriguez', 'PathoGenOmics']
+__license__ = 'GPL 3'
+__version__ = '0.1.0'
+__maintainer__ = 'Paula Ruiz-Rodriguez: @paururo'
+__email__ = 'paula.ruiz-rodriguez@uv.es'
+__status__ = 'developing'
+__lab__ = 'PathoGenOmics, I2SysBio'
+
 def setup_logging():
     current_date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')  # Get current date and time
     logger = logging.getLogger(__name__) # Create a custom logger
     logger.setLevel(logging.INFO) # Set the level of this logger
-    handler = logging.FileHandler(f'gbk2tsv_{current_date}.log')     # Create a file handler
+    handler = logging.FileHandler(f'gbk2tsv_{current_date}.log') # Create a file handler
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') # Create a logging format
-    handler.setFormatter(formatter)    # Add the formatter to the handler
-    logger.addHandler(handler)   # Add the handler to the logger  
+    handler.setFormatter(formatter) # Add the formatter to the handler
+    logger.addHandler(handler) # Add the handler to the logger  
     return logger
 
 def parse_args():
@@ -27,6 +36,7 @@ def parse_args():
             1. python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRNA,rRNA --nucleotides --protein
             2. python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features CDS,rRNA,tRNA
             3. python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleotides
+        Requires Biopython
         '''
     )
     parser.add_argument('-g', '--gbk', nargs = '+', type = str, required = True, dest = 'gbks', default = '', help = 'Specify GenBank files as input')
@@ -66,7 +76,6 @@ def process_feature(feature, contig, args):
     is_pseudo = 'True' if 'pseudo' in feature.qualifiers or 'pseudogene' in feature.qualifiers else 'False'
     product = feature.qualifiers.get('product', ['unknown'])[0]
     note = feature.qualifiers.get('note', ['unknown'])[0]
-
     line = [contig, locus_tag, feature.type, str(feature.location.nofuzzy_start + 1), str(feature.location.nofuzzy_end), strand, is_pseudo, product, note]
     if args.nucleotides:
         line.append(str(feature.extract(record.seq)))
@@ -75,8 +84,7 @@ def process_feature(feature, contig, args):
     return line
 
 def main():
-    # Set up logging
-    logger = setup_logging()
+    logger = setup_logging() # Set up logging
     logger.info('Starting the conversion process')
     
     args = parse_args()
@@ -93,6 +101,7 @@ def main():
     features = args.features.split(',')
     header = prepare_header(args)
     pathlib.Path(args.outdir).mkdir(parents=True, exist_ok=True)
+    
     for gbk in gbk_list:
         logger.info(f'Processing file: {gbk}')
         tsv_name = pathlib.Path(args.outdir, pathlib.Path(gbk).stem + '.tsv')
@@ -104,6 +113,7 @@ def main():
             for line in lines:
                 tsv.write('\t'.join(line) + '\n')
         logger.info(f'Finished processing file: {gbk}')
+    
     logger.info('Conversion process completed successfully')   
                 
 if __name__ == '__main__':
