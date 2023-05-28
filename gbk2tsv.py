@@ -42,7 +42,7 @@ def process_records(records, features, args):
 def process_feature(feature, contig, args):
     locus_tag = feature.qualifiers.get("locus_tag", ["unnamed"])[0]
     strand = "+" if feature.strand == 1 else "-"
-    is_pseudo = "Y" if "pseudo" in feature.qualifiers or "pseudogene" in feature.qualifiers else "N"
+    is_pseudo = "True" if "pseudo" in feature.qualifiers or "pseudogene" in feature.qualifiers else "False"
     product = feature.qualifiers.get("product", ["unknown"])[0]
     note = feature.qualifiers.get("note", ["unknown"])[0]
 
