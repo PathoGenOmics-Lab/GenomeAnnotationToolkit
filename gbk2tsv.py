@@ -36,6 +36,20 @@ def process_records(records, features, args):
             lines.append(line)
     return lines
 
+def process_feature(feature, contig, args):
+    locus_tag = feature.qualifiers.get("locus_tag", ["unnamed"])[0]
+    strand = "+" if feature.strand == 1 else "-"
+    is_pseudo = "Y" if "pseudo" in feature.qualifiers or "pseudogene" in feature.qualifiers else "N"
+    product = feature.qualifiers.get("product", ["unknown"])[0]
+    note = feature.qualifiers.get("note", ["unknown"])[0]
+
+    line = [contig, locus_tag, feature.type, str(feature.location.nofuzzy_start + 1), str(feature.location.nofuzzy_end), strand, is_pseudo, product, note]
+    if args.nucl_seq:
+        line.append(str(feature.extract(record.seq)))
+    if feature.type == "CDS" and args.prot_seq:
+        line.append(feature.qualifiers.get("translation", ["unknown"])[0])
+    return line
+
 def main():
     args = parse_args()
     gbk_list = get_input_filenames(args.gbks)
