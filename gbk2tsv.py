@@ -22,6 +22,7 @@ def get_input_filenames(gbks):
 def main():
     args = parse_args()
     gbk_list = get_input_filenames(args.gbks)
+    features = args.features.split(",")
     
 if __name__ == "__main__":
     main()
