@@ -3,7 +3,8 @@
 
 # gbk2tsv.py: GenBank to TSV Converter
 
-This Python script is designed to convert GenBank files into tab-separated value (TSV) files. It is particularly useful for bioinformaticians and researchers studying gene sequences.
+This Python script is designed to convert GenBank files into tab-separated value (TSV) files. It is particularly useful for bioinformaticians and researchers studying gene sequences. 
+Modified from [this repository](https://github.com/wanyuac/BINF_toolkit/blob/master/gbk2tsv.py).
 
 ## Features
 
