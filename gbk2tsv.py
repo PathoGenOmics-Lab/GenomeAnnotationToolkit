@@ -26,11 +26,11 @@ def parse_args():
     parser.add_argument("-p", "--protein", action = "store_true", required = False, dest = "protein", help = "Enable this to include protein sequences of CDS")
     return parser.parse_args()  # Returns an instance of the class ArgumentParser
 
-def get_input_filenames(gbks):
+def get_input_filenames(gbks, logger):
     gbk_list = list(gbks)
     if len(gbk_list) == 1 and gbk_list[0].startswith("*"):  # *.gbk
         gbk_list = glob.glob(str(pathlib.Path(".", gbk_list[0])))  # Get names of all GenBank files under the current working directory
-        logging.info(f'Found {len(gbk_list)} GenBank files in the directory')
+        logger.info(f'Found {len(gbk_list)} GenBank files in the directory')
     return gbk_list
 
 def prepare_header(args):
@@ -67,24 +67,24 @@ def process_feature(feature, contig, args):
 def main():
     # Set up logging
     logger = setup_logging()
-    logging.info('Starting the conversion process')
+    logger.info('Starting the conversion process')
     
     args = parse_args()
-    gbk_list = get_input_filenames(args.gbks)
+    gbk_list = get_input_filenames(args.gbks, logger)
     
     if args.outdir and not os.path.exists(args.outdir):  
         os.makedirs(args.outdir)
-        logging.info(f'Output directory {args.outdir} created')
+        logger.info(f'Output directory {args.outdir} created')
     
     if (len(gbk_list) == 0):
-        logging.error('Invalid --gbk argument: no GenBank file is found.')
+        logger.error('Invalid --gbk argument: no GenBank file is found.')
         sys.exit("Invalid --gbk argument: no GenBank file is found.")
         
     features = args.features.split(",")
     header = prepare_header(args)
     pathlib.Path(args.outdir).mkdir(parents=True, exist_ok=True)
     for gbk in gbk_list:
-        logging.info(f'Processing file: {gbk}')
+        logger.info(f'Processing file: {gbk}')
         tsv_name = pathlib.Path(args.outdir, pathlib.Path(gbk).stem + ".tsv")
         records = list(SeqIO.parse(gbk, "genbank"))
         lines = process_records(records, features, args)
@@ -93,8 +93,8 @@ def main():
             tsv.write("\t".join(header) + "\n")
             for line in lines:
                 tsv.write("\t".join(line) + "\n")
-        logging.info(f'Finished processing file: {gbk}')
-    logging.info('Conversion process completed successfully')   
+        logger.info(f'Finished processing file: {gbk}')
+    logger.info('Conversion process completed successfully')   
                 
 if __name__ == "__main__":
     main()
