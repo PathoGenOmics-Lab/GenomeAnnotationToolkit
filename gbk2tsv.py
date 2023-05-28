@@ -18,6 +18,7 @@ def get_input_filenames(gbks):
     gbk_list = list(gbks)
     if len(gbk_list) == 1 and gbk_list[0].startswith("*"):  # *.gbk
         gbk_list = glob.glob(str(pathlib.Path(".", gbk_list[0])))  # Get names of all GenBank files under the current working directory
+        logging.info(f'Found {len(gbk_list)} GenBank files in the directory')
     return gbk_list
 
 def prepare_header(args):
@@ -52,12 +53,26 @@ def process_feature(feature, contig, args):
     return line
 
 def main():
+    # Set up logging
+    logging.basicConfig(filename='gbk2tsv.log', level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
+    logging.info('Starting the conversion process')
+    
     args = parse_args()
     gbk_list = get_input_filenames(args.gbks)
+    
+    if args.outdir and not os.path.exists(args.outdir):  
+        os.makedirs(args.outdir)
+        logging.info(f'Output directory {args.outdir} created')
+    
+    if (len(gbk_list) == 0):
+        logging.error('Invalid --gbk argument: no GenBank file is found.')
+        sys.exit("Invalid --gbk argument: no GenBank file is found.")
+        
     features = args.features.split(",")
     header = prepare_header(args)
     pathlib.Path(args.outdir).mkdir(parents=True, exist_ok=True)
     for gbk in gbk_list:
+        logging.info(f'Processing file: {gbk}')
         tsv_name = pathlib.Path(args.outdir, pathlib.Path(gbk).stem + ".tsv")
         records = list(SeqIO.parse(gbk, "genbank"))
         lines = process_records(records, features, args)
@@ -65,7 +80,9 @@ def main():
         with open(tsv_name, "w") as tsv:
             tsv.write("\t".join(header) + "\n")
             for line in lines:
-                tsv.write("\t".join(line) + "\n")    
+                tsv.write("\t".join(line) + "\n")
+        logging.info(f'Finished processing file: {gbk}')
+    logging.info('Conversion process completed successfully')   
                 
 if __name__ == "__main__":
     main()
