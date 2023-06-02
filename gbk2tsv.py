@@ -28,27 +28,6 @@ def setup_logging():
     logger.addHandler(handler) # Add the handler to the logger  
     return logger
 
-def parse_args():
-    parser = ArgumentParser(
-        formatter_class=RawTextHelpFormatter,
-        description='''
-        Transforms GenBank files into tab-separated value files.
-
-        Example commands:
-            1. python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRNA,rRNA --nucleotides --protein
-            2. python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features CDS,rRNA,tRNA
-            3. python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleotides
-        
-        Requires Biopython
-        '''
-    )
-    parser.add_argument('-g', '--gbk', nargs = '+', type = str, required = True, dest = 'gbks', default = '', help = 'Specify GenBank files as input')
-    parser.add_argument('-o', '--outdir', type = str, required = False, dest = 'outdir', default = '.', help = 'Define the directory for output files')
-    parser.add_argument('-f', '--features', type = str, required = False, dest = 'features', default = 'CDS,tRNA,rRNA', help = 'Features to include, separated by commas')
-    parser.add_argument('-n', '--nucleotides', action = 'store_true', required = False, dest = 'nucleotides', help = 'Enable this to include nucleotide sequences of features')
-    parser.add_argument('-p', '--protein', action = 'store_true', required = False, dest = 'protein', help = 'Enable this to include protein sequences of CDS')
-    return parser.parse_args()  # Returns an instance of the class ArgumentParser
-
 def get_input_filenames(gbks, logger):
     gbk_list = list(gbks)
     if len(gbk_list) == 1 and gbk_list[0].startswith('*'):  # *.gbk
@@ -85,6 +64,27 @@ def process_feature(feature, contig, args):
     if feature.type == 'CDS' and args.protein:
         line.append(feature.qualifiers.get('translation', ['unknown'])[0])
     return line
+
+def parse_args():
+    parser = ArgumentParser(
+        formatter_class=RawTextHelpFormatter,
+        description='''
+        Transforms GenBank files into tab-separated value files.
+
+        Example commands:
+            1. python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRNA,rRNA --nucleotides --protein
+            2. python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features CDS,rRNA,tRNA
+            3. python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleotides
+        
+        Requires Biopython
+        '''
+    )
+    parser.add_argument('-g', '--gbk', nargs = '+', type = str, required = True, dest = 'gbks', default = '', help = 'Specify GenBank files as input')
+    parser.add_argument('-o', '--outdir', type = str, required = False, dest = 'outdir', default = '.', help = 'Define the directory for output files')
+    parser.add_argument('-f', '--features', type = str, required = False, dest = 'features', default = 'CDS,tRNA,rRNA', help = 'Features to include, separated by commas')
+    parser.add_argument('-n', '--nucleotides', action = 'store_true', required = False, dest = 'nucleotides', help = 'Enable this to include nucleotide sequences of features')
+    parser.add_argument('-p', '--protein', action = 'store_true', required = False, dest = 'protein', help = 'Enable this to include protein sequences of CDS')
+    return parser.parse_args()  # Returns an instance of the class ArgumentParser
 
 def main():
     logger = setup_logging() # Set up logging
