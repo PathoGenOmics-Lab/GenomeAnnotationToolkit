@@ -3,6 +3,7 @@ This repository contains useful scripts for parsing genomic annotations.
 
 ## Scripts available
 1. [gbk2tsv.py: GenBank to TSV Converter](#gbk2tsvpy-genbank-to-tsv-converter)
+2. [tsv2gbk.py: TSV to GenBank Converter](#tsv2gbkpy-genbank-to-tsv-converter)
 
 # gbk2tsv.py: GenBank to TSV Converter
 
@@ -28,7 +29,9 @@ python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRN
 ```
 
 You can also process multiple GenBank files at once:
+```
 python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features "CDS,rRNA,tRNA"
+```
 Or specify individual GenBank files:
 
 ```
@@ -46,3 +49,5 @@ python3 gbk2tsv.py --gbk file1.gbk file2.gbk --outdir . --features CDS --nucleot
 ## Logging
 
 The script generates a log file with detailed information about the processing of each file. The log file is named `gbk2tsv_YYYY-MM-DD_HH-MM-SS.log`, with the date and time reflecting when the script was run.
+
+# tsv2gbk.py: GenBank to TSV Converter
