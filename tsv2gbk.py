@@ -31,6 +31,14 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
             gene = row[6]
             product = row[7]
             db_xrefs = row[8]
+            
+            qualifiers = {
+                'locus_tag': locus_tag,
+                'gene': gene,
+                'product': product,
+                'db_xref': db_xrefs.split(', '),
+            }
+
 
 
 
