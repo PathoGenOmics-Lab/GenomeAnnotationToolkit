@@ -14,7 +14,7 @@ __license__ = ['GPL 3']
 __version__ = '0.1.0'
 __maintainer__ = 'Paula Ruiz-Rodriguez: @paururo'
 __email__ = 'paula.ruiz-rodriguez@uv.es'
-__status__ = 'finished'
+__status__ = 'developing'
 __lab__ = 'PathoGenOmics (I2SysBio)'
 
 def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
