@@ -44,6 +44,13 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
                     sequence = sequence.reverse_complement()
                 translation = str(sequence.translate(to_stop=False))
                 qualifiers['translation'] = translation
+                
+                gene_qualifiers = {
+                    'locus_tag': locus_tag,
+                    'gene': gene
+                }
+                gene_feature = SeqFeature(FeatureLocation(start, end, strand=strand), type='gene', qualifiers=gene_qualifiers)
+                seq_record.features.append(gene_feature)
 
 
 
