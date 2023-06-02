@@ -8,7 +8,7 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.SeqFeature import SeqFeature, FeatureLocation
-from Bio.Data import CodonTable
+
 
 def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
     with open(tsv_file, 'r') as tsv:
@@ -57,10 +57,6 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
 
         with open(gbk_file, 'w') as gbk:
             SeqIO.write(seq_record, gbk, 'genbank')
-
-
-
-
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Convert a TSV file to a GenBank file')
