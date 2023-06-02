@@ -8,6 +8,15 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.SeqFeature import SeqFeature, FeatureLocation
 
+__author__ = 'Paula Ruiz-Rodriguez'
+__credits__ = ['Paula Ruiz-Rodriguez', 'PathoGenOmics']
+__license__ = ['GPL 3']
+__version__ = '0.1.0'
+__maintainer__ = 'Paula Ruiz-Rodriguez: @paururo'
+__email__ = 'paula.ruiz-rodriguez@uv.es'
+__status__ = 'finished'
+__lab__ = 'PathoGenOmics (I2SysBio)'
+
 def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
     with open(tsv_file, 'r') as tsv:
         tsv_reader = csv.reader(tsv, delimiter='\t')
