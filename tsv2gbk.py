@@ -19,6 +19,11 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
             seq_record = SeqRecord(Seq(str(record.seq)), id=fasta_name, description=record.description)
 
         seq_record.annotations['molecule_type'] = molecule_type
+        
+        for row in tsv_reader:
+            if row[0].startswith('#'):
+                continue
+            feature_type = row[1]
 
 
 
