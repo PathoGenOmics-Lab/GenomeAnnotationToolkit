@@ -40,6 +40,11 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
             }
             if feature_type == 'cds':
                 sequence = seq_record.seq[start:end]
+                if strand == -1:
+                    sequence = sequence.reverse_complement()
+                translation = str(sequence.translate(to_stop=False))
+                qualifiers['translation'] = translation
+
 
 
 
