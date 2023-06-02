@@ -38,6 +38,8 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
                 'product': product,
                 'db_xref': db_xrefs.split(', '),
             }
+            if feature_type == 'cds':
+                sequence = seq_record.seq[start:end]
 
 
 
