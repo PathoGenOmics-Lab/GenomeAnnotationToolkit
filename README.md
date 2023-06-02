@@ -29,7 +29,9 @@ python3 gbk2tsv.py --gbk file.gbk --outdir ./output_directory --features CDS,tRN
 ```
 
 You can also process multiple GenBank files at once:
+```
 python3 gbk2tsv.py --gbk $(ls *.gbk) --outdir . --features "CDS,rRNA,tRNA"
+```
 Or specify individual GenBank files:
 
 ```
