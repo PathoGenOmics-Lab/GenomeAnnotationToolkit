@@ -1,14 +1,12 @@
 #! /usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import sys
 import csv
 import argparse
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.SeqFeature import SeqFeature, FeatureLocation
-
 
 def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
     with open(tsv_file, 'r') as tsv:
