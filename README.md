@@ -1,4 +1,4 @@
-# genomic_toolbox
+# GenomeAnnotationToolkit
 This repository contains useful scripts for parsing genomic data.
 
 ## Scripts available
