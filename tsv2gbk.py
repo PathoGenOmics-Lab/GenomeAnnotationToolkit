@@ -73,6 +73,7 @@ def parse_args():
 
 def main():
     args = parse_args()
+    tsv_to_gbk(args.tsv_file, args.fasta_file, args.gbk_file, args.molecule_type)
 
 if __name__ == '__main__':
     main()
