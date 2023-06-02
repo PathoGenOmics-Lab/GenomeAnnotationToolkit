@@ -20,3 +20,9 @@ def parse_args():
     parser.add_argument('-molecule_type', dest='molecule_type', default='DNA', help='Molecule type (default: DNA)')
     
     return parser.parse_args()  # Returns an instance of the class ArgumentParser
+
+def main():
+    args = parse_args()
+
+if __name__ == '__main__':
+    main()
