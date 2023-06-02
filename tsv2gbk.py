@@ -55,6 +55,9 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
             feature = SeqFeature(FeatureLocation(start, end, strand=strand), type=feature_type, qualifiers=qualifiers)
             seq_record.features.append(feature)
 
+        with open(gbk_file, 'w') as gbk:
+            SeqIO.write(seq_record, gbk, 'genbank')
+
 
 
 
