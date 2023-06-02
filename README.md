@@ -1,5 +1,5 @@
 # GenomeAnnotationToolkit
-This repository contains useful scripts for parsing genomic data.
+This repository contains useful scripts for parsing genomic annotations.
 
 ## Scripts available
 1. [gbk2tsv.py: GenBank to TSV Converter](#gbk2tsvpy-genbank-to-tsv-converter)
