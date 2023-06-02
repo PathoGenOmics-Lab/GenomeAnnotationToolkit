@@ -11,7 +11,9 @@ from Bio.SeqFeature import SeqFeature, FeatureLocation
 from Bio.Data import CodonTable
 
 def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
-    
+    with open(tsv_file, 'r') as tsv:
+        tsv_reader = csv.reader(tsv, delimiter='\t')
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Convert a TSV file to a GenBank file')
