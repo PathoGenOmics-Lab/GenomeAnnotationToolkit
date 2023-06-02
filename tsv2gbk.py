@@ -24,6 +24,13 @@ def tsv_to_gbk(tsv_file, fasta_file, gbk_file, molecule_type='DNA'):
             if row[0].startswith('#'):
                 continue
             feature_type = row[1]
+            start = int(row[2]) - 1  # Convert to 0-based index
+            end = int(row[3])
+            strand = 1 if row[4] == '+' else -1 if row[4] == '-' else 0
+            locus_tag = row[5]
+            gene = row[6]
+            product = row[7]
+            db_xrefs = row[8]
 
 
 
